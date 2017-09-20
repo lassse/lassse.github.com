@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>iOS11</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	html, body {
+		margin: 0;
+
+	}
+</style>
+</head>
+<body>
+	<script>
+		function init() {
+			var video = document.createElement('video');
+			video.style.width = window.innerWidth + 'px';
+			video.style.height = window.innerHeight + 'px';
+			video.setAttribute('autoplay', '');
+			video.setAttribute('muted', '');
+			video.setAttribute('playsinline', '');
+
+			var facingMode = "user";
+			var constraints = {
+				audio: false,
+				video: {
+					facingMode: facingMode
+				}
+			}
+
+			document.body.appendChild(video);
+
+			video.addEventListener('click', function() {
+				if (facingMode == "user") {
+					facingMode = "environment";
+				} else {
+					facingMode = "user";
+				}
+
+				constraints = {
+					audio: false,
+					video: {
+						facingMode: facingMode
+					}
+				} 
+
+				navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+					video.srcObject = stream; 
+				});
+			});
+		}
+
+		window.addEventListener('load', init);
+	</script>
+</body>
+</html>
